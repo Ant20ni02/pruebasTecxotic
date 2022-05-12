@@ -12,7 +12,7 @@ import time
 import pickle #to storage values and reuse them
 import shutil
     
-cap = cv2.VideoCapture(1,  cv2.CAP_DSHOW) #camera number
+cap = cv2.VideoCapture(0,  cv2.CAP_DSHOW) #camera number
 
 #directory = r"C:\Users\anton\OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey\Universidad TEC21\TECXOTIC\Software\Photomosaic\photos"
 #mainDirectory = r"C:\Users\anton\OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey\Universidad TEC21\TECXOTIC\Software\Photomosaic"
@@ -53,7 +53,7 @@ def resizeAndStack():
         print("photoName: ", f"photo{i+1}.jpg")
         #Resize
         images[i]=cv2.resize(images[i],(200,200))
-        print("kiti")
+        #print("kiti")
            
     #Stack 
     stack1=cv2.hconcat([images[0],images[1],images[2],images[3]])
@@ -128,5 +128,6 @@ def main():
         os.mkdir(os.getcwd() + directory)
         ###############################################################################################################
     cap.release()
-main()
+
+#main()
 

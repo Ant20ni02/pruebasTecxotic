@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Prueba</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <img src="http://127.0.0.1:3000/photomosaic">
+    <div class="container">
+        
+        <form  method="get" enctype="multipart/form-data">
+            <button type="button" id="cat" name="cat" class="btn btn-primary btn-lg">Foto</button>
+
+            
+
+            <img  src="http://127.0.0.1:3000/photomosaic" id="thumbnail"/>
+        </form>
+    </div>
 </body>
-</html>
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $("#cat").click(function () {
+            $.ajax({url: "http://127.0.0.1:3000/photomosaic", success: function (result) {
+                    $("#thumbnail").attr('src',result.file);
+                }});
+        });
+
+    </script>

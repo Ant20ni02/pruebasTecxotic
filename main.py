@@ -1,8 +1,10 @@
+import os
+import sys
 from flask import Flask, render_template, send_file, redirect, url_for, request
-#from photomosaic import main
+import photomosaic
 #from floatgrid import main
 
-#count = 0
+count = 1
 
 
 # Configuration of Flask_Socketio
@@ -25,13 +27,20 @@ def get_photomosaic():
         count += 1
         #photomosaic.main()
         return 'Done!'
+        'photomosaic.jpg'
 '''
 
 @app.route('/photomosaic')
 def get_photomosaic():
-    filename = 'photomosaic.jpeg'
-    return send_file(filename, mimetype='image/jpeg')
-
+    global count
+    if(count == 8):
+        count = 1
+        photomosaic.main()
+        return send_file('photo'+str(1) +'.jpg', mimetype='image/jpg')
+    else:
+        count += 1
+        #photomosaic.main()
+        return send_file('loading.jpg', mimetype='image/jpg')
 
 '''
 @app.route('/floatgrid',methods = ['POST'])
@@ -51,5 +60,17 @@ if __name__ == '__main__':
     try:
         print("Running...")
         app.run(debug = True, host='0.0.0.0', port="3000")
+    except KeyboardInterrupt:
+        dir =  os.getcwd() + '\photos'
+        for f in os.listdir(dir):
+            os.remove(os.path.join(dir, f))
+        os.remove(os.getcwd() + '\currentPhoto.pk')
+        print('kiti')
     except Exception as e:
+        dir =  os.getcwd() + '\photos'
+        for f in os.listdir(dir):
+            os.remove(os.path.join(dir, f))
+        os.remove(os.getcwd() + '\currentPhoto.pk')
         print(e)
+
+        
