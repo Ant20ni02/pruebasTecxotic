@@ -47,7 +47,6 @@ def get_photomosaic():
         photomosaic()
         return send_file('photomosaic.jpg', mimetype='image/jpg')
         
-
 '''
 @app.route('/floatgrid',methods = ['POST'])
 def floatgrid():
