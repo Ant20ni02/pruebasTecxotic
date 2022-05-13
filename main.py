@@ -1,10 +1,11 @@
 import os
 import sys
 from flask import Flask, render_template, send_file, redirect, url_for, request
-import photomosaic
+import pickle
+from Photomosaic import photomosaic
 #from floatgrid import main
 
-count = 1
+currPhoto = 0
 
 
 # Configuration of Flask_Socketio
@@ -32,15 +33,20 @@ def get_photomosaic():
 
 @app.route('/photomosaic')
 def get_photomosaic():
-    global count
-    if(count == 8):
-        count = 1
-        photomosaic.main()
-        return send_file('photo'+str(1) +'.jpg', mimetype='image/jpg')
-    else:
-        count += 1
-        #photomosaic.main()
+    global currPhoto
+    try:
+        infile = open("currentPhoto.pk",'rb')
+        currPhoto = pickle.load(infile)
+        infile.close()
+    except:
+        currPhoto = 0
+    if(currPhoto < 8):
+        photomosaic()
         return send_file('loading.jpg', mimetype='image/jpg')
+    else:
+        photomosaic()
+        return send_file('photomosaic.jpg', mimetype='image/jpg')
+        
 
 '''
 @app.route('/floatgrid',methods = ['POST'])

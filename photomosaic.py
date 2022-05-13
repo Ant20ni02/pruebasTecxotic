@@ -12,12 +12,13 @@ import time
 import pickle #to storage values and reuse them
 import shutil
     
-cap = cv2.VideoCapture(0,  cv2.CAP_DSHOW) #camera number
+cap = cv2.VideoCapture(0) #camera number ,  cv2.CAP_DSHOW
 
 #directory = r"C:\Users\anton\OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey\Universidad TEC21\TECXOTIC\Software\Photomosaic\photos"
 #mainDirectory = r"C:\Users\anton\OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey\Universidad TEC21\TECXOTIC\Software\Photomosaic"
 
-directory = r"\photos"
+directory = r"/photos"
+#directory = r"\photos"
 #mainDirectory = "../photos/"
 backwards = r".."
 
@@ -73,7 +74,7 @@ def resizeAndStack():
     cv2.destroyAllWindows
     
     
-def main():
+def photomosaic():
     # starts at main directory
     global currPhoto
 
@@ -129,5 +130,5 @@ def main():
         ###############################################################################################################
     cap.release()
 
-#main()
+photomosaic()
 
