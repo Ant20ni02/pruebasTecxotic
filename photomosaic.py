@@ -54,3 +54,4 @@ def photomosaic(photosDir):
         os.remove("photo" + str(i+1) + ".jpg")
     os.chdir("..")
 
+
