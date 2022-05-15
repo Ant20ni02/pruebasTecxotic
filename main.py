@@ -3,8 +3,8 @@ import sys
 from flask import Flask, render_template, send_file, redirect, url_for, request
 import cv2
 import Photomosaic
+import Floatgrid
 
-#from floatgrid import main "photo" + str(currPhoto+1) + ".jpg"
 currPhoto = 0
 cap = cv2.VideoCapture(0)
 mainDir = os.getcwd()
@@ -38,18 +38,18 @@ def photomosaic_change():
     return send_file("photos\photo" + str(currentPhoto) + ".jpg", mimetype='image/jpg')
 
 
-'''
+
 @app.route('/floatgrid',methods = ['POST'])
 def floatgrid():
-    speed =  request.form['float_speed']
-    angle =  request.form['float_angle']
-    time =  request.form['float_time']
-    float(speed)
-    float(angle)
-    float(time)
-    #floatgrid.main(speed, angle, time)
+    json_dict = request.get_json()
+    speed = float(json_dict["grid_speed"])
+    angle =  float(json_dict["grid_angle"])
+    time =  float(json_dict["grid_time"])
+    x = int(json_dict["grid_x"])
+    y = int(json_dict["grid_y"])
+    Floatgrid.main(speed, angle, time,x,y)
     return send_file('floatgrid.jpg', mimetype='image/jpg') 
-'''
+
 
 
 if __name__ == '__main__':
