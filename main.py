@@ -1,12 +1,14 @@
 import os
 import sys
 from flask import Flask, render_template, send_file, redirect, url_for, request
-import pickle
-from Photomosaic import photomosaic
-#from floatgrid import main
+import cv2
+import Photomosaic
 
+#from floatgrid import main "photo" + str(currPhoto+1) + ".jpg"
 currPhoto = 0
-
+cap = cv2.VideoCapture(0)
+mainDir = os.getcwd()
+photosDir = mainDir + "\photos"
 
 # Configuration of Flask_Socketio
 app = Flask(__name__)
@@ -31,21 +33,20 @@ def get_photomosaic():
         'photomosaic.jpg'
 '''
 
-@app.route('/photomosaic')
+@app.route('/photomosaic_takePhoto')
 def get_photomosaic():
     global currPhoto
-    try:
-        infile = open("currentPhoto.pk",'rb')
-        currPhoto = pickle.load(infile)
-        infile.close()
-    except:
-        currPhoto = 0
-    if(currPhoto < 8):
-        photomosaic()
-        return send_file('loading.jpg', mimetype='image/jpg')
-    else:
-        photomosaic()
-        return send_file('photomosaic.jpg', mimetype='image/jpg')
+    currPhoto +=1
+    if currPhoto > 8:
+        currPhoto = 1
+        os.chdir(photosDir)
+        for i in range(8):
+            os.remove("photo" + str(i+1) + ".jpg")
+        os.chdir(mainDir)
+    os.chdir(photosDir)
+    Photomosaic.takePhoto(currPhoto, cap)
+    os.chdir(mainDir)
+    return send_file("photos\photo" + str(currPhoto) + ".jpg", mimetype='image/jpg')
         
 '''
 @app.route('/floatgrid',methods = ['POST'])
