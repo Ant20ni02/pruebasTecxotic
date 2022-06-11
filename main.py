@@ -14,7 +14,7 @@ photosDir = mainDir + "\photos" #windows
 # Configuration of Flask_Socketio
 app = Flask(__name__)
 
-@app.route('/photomosaic_takePhoto')
+@app.route('/photomosaicPhoto')#Take photo one by one
 def photomosaic_photo():
     global currPhoto
     currPhoto +=1
@@ -28,7 +28,7 @@ def photomosaic_photo():
     return send_file("photos\photo" + str(currPhoto) + ".jpg", mimetype='image/jpg')
 
 
-@app.route('/photomosaic_changePhoto',methods=['POST'])
+@app.route('/photomosaicChange',methods=['POST'])#take and change a photo with the number of the photo
 def photomosaic_change():
     json_dict = request.get_json()
     currentPhoto = json_dict["currentPhoto"]
@@ -55,7 +55,7 @@ def floatgrid():
 if __name__ == '__main__':
     try:
         print("Running...")
-        app.run(debug = True, host='0.0.0.0', port="3000")
+        app.run(debug = True, host='0.0.0.0', port="8080")
     except KeyboardInterrupt:
         for f in os.listdir(photosDir):
             os.remove(os.path.join(photosDir, f))
